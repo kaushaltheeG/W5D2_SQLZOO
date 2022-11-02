@@ -4,7 +4,7 @@
 #
 #  id          :integer      not null, primary key
 #  dept_id     :integer
-#  name        :string
+#  name        :stri ng
 #  phone       :integer
 #  mobile      :string
 #
@@ -111,14 +111,14 @@ def teachers_and_divisions
   # the teacher is in dept 1 or 2 and 'Art' otherwise.
   execute(<<-SQL)
   SELECT 
-    depts.id
+    name,
     CASE 
-      WHEN depts.id = 1 THEN 'Sci'
-      WHEN depts.id = 2 THEN 'Sci'
-      ELSE 'ART'
+      WHEN dept_id = 1 THEN 'Sci'
+      WHEN dept_id = 2 THEN 'Sci'
+      ELSE 'Art'
+    END AS  dept_text
   FROM 
-    depts
-    LEFT JOIN teachers ON teachers.dept_id = depts.id
+    teachers
   SQL
 end
 
@@ -127,5 +127,15 @@ def teachers_and_divisions_two
   # the teacher is in dept 1 or 2, 'Art' if the dept is 3, and
   # 'None' otherwise.
   execute(<<-SQL)
+  SELECT 
+    name,
+    CASE 
+      WHEN dept_id = 1 THEN 'Sci'
+      WHEN dept_id = 2 THEN 'Sci'
+      WHEN dept_id = 3 THEN 'Art'
+      ELSE 'None'
+    END AS  dept_text
+  FROM 
+    teachers
   SQL
 end
